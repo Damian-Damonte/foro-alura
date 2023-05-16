@@ -17,7 +17,7 @@ public interface CourseMapper {
             target = "categories",
             expression = "java(categoriesIdsToCategories(courseRequest.categoriesIds()))")
     Course courseRequestToCourse(CourseRequest courseRequest);
-//    CourseResponse courseToCourseResponse(Course course);
+    CourseResponse courseToCourseResponse(Course course);
 
     default List<Category> categoriesIdsToCategories(List<Long> categoriasIds) {
         return categoriasIds.stream().map(id -> Category.builder().id(id).build()).toList();

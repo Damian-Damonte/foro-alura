@@ -6,10 +6,7 @@ import com.alura.foroAlura.mapper.CourseMapper;
 import com.alura.foroAlura.model.Course;
 import com.alura.foroAlura.repository.CourseRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +19,14 @@ public class CourseController {
     public CourseController(CourseRepository courseRepository, CourseMapper courseMapper) {
         this.courseRepository = courseRepository;
         this.courseMapper = courseMapper;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CourseResponse>>getAllCourses() {
+        List<CourseResponse> coursesResponse = courseRepository.findAll()
+                .stream().map(courseMapper::courseToCourseResponse).toList();
+
+        return ResponseEntity.ok(coursesResponse);
     }
 
     @PostMapping()
