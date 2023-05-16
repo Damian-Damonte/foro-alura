@@ -20,13 +20,6 @@ public interface CourseMapper {
 //    CourseResponse courseToCourseResponse(Course course);
 
     default List<Category> categoriesIdsToCategories(List<Long> categoriasIds) {
-        return categoriasIds.stream()
-//                simplificar retornando direcatemente al category usando el builder
-                .map(id -> {
-                    Category category = new Category();
-                    category.setId(id);
-                    return category;
-                })
-                .toList();
+        return categoriasIds.stream().map(id -> Category.builder().id(id).build()).toList();
     }
 }
