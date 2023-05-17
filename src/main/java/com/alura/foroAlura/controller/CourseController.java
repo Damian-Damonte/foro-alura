@@ -3,8 +3,7 @@ package com.alura.foroAlura.controller;
 import com.alura.foroAlura.dto.course.CourseRequest;
 import com.alura.foroAlura.dto.course.CourseResponse;
 import com.alura.foroAlura.mapper.CourseMapper;
-import com.alura.foroAlura.model.Course;
-import com.alura.foroAlura.repository.CourseRepository;
+import com.alura.foroAlura.service.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,26 +12,37 @@ import java.util.List;
 @RestController
 @RequestMapping("/courses")
 public class CourseController {
-    private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
+    private final CourseService courseService;
 
-    public CourseController(CourseRepository courseRepository, CourseMapper courseMapper) {
-        this.courseRepository = courseRepository;
+    public CourseController(CourseMapper courseMapper, CourseService courseService) {
         this.courseMapper = courseMapper;
+        this.courseService = courseService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseResponse> getCourseById(@PathVariable Long id) {
+        return ResponseEntity.ok(courseMapper.courseToCourseResponse(courseService.getCourseById(id)));
     }
 
     @GetMapping
     public ResponseEntity<List<CourseResponse>>getAllCourses() {
-        List<CourseResponse> coursesResponse = courseRepository.findAll()
-                .stream().map(courseMapper::courseToCourseResponse).toList();
-
-        return ResponseEntity.ok(coursesResponse);
+        return ResponseEntity.ok(courseService.getAllCourses());
     }
 
     @PostMapping()
-    public void saveCourse(@RequestBody CourseRequest courseRequest) {
-        Course course = courseMapper.courseRequestToCourse(courseRequest);
-        Course courseSave = courseRepository.save(course);
+    public ResponseEntity<CourseResponse> saveCourse(@RequestBody CourseRequest courseRequest) {
+        return ResponseEntity.ok(courseService.saveCourse(courseRequest));
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CourseResponse> updateCourse(@PathVariable Long id, @RequestBody CourseRequest courseRequest) {
+        return ResponseEntity.ok(courseService.updateCourse(id, courseRequest));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
+        courseService.deleteCourse(id);
+        return ResponseEntity.noContent().build();
     }
 }
