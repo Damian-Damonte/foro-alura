@@ -2,6 +2,8 @@ package com.alura.foroAlura.service.impl;
 
 import com.alura.foroAlura.dto.category.CategoryRequest;
 import com.alura.foroAlura.dto.category.CategoryResponse;
+import com.alura.foroAlura.exception.BadRequestException;
+import com.alura.foroAlura.exception.NotFoundException;
 import com.alura.foroAlura.mapper.CategoryMapper;
 import com.alura.foroAlura.model.Category;
 import com.alura.foroAlura.repository.CategoryRepository;
@@ -25,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category getCategoryById(Long id) {
         return categoryRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Category with id " + id + " not found"));
+                () -> new NotFoundException("Category with id " + id + " not found"));
     }
 
     @Override
@@ -38,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponse saveCategory(CategoryRequest categoryRequest) {
         String categoryName = categoryRequest.name();
         if(categoryRepository.findByName(categoryName).isPresent())
-            throw new RuntimeException("There is already a category with the name '" + categoryName + "'");
+            throw new BadRequestException("There is already a category with the name '" + categoryName + "'");
         Category categorySave = categoryRepository.save(categoryMapper.categoryRequestToCategory(categoryRequest));
         return categoryMapper.categoryToCategoryResponse(categorySave);
     }
@@ -50,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
         String categoryName = categoryRequest.name();
         Category categoryByName = categoryRepository.findByName(categoryName).orElse(null);
         if(categoryByName != null && !(Objects.equals(categoryByName.getId(), id)))
-            throw new RuntimeException("There is already a category with the name '" + categoryName + "'");
+            throw new BadRequestException("There is already a category with the name '" + categoryName + "'");
         category.setName(categoryName);
 
         return categoryMapper.categoryToCategoryResponse(category);
