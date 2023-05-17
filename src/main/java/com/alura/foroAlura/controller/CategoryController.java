@@ -25,9 +25,6 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable Long id) {
-//        CategoryResponse categoryResponse = categoryMapper.categoryToCategoryResponse(
-//                categoryRepository.findById(id).orElse(null));
-
         return ResponseEntity.ok(categoryMapper.categoryToCategoryResponse(categoryService.getCategoryById(id)));
     }
 
@@ -38,8 +35,6 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<CategoryResponse> saveCategory(@RequestBody CategoryRequest categoryRequest) {
-//        Category category = categoryRepository.save(categoryMapper.categoryRequestToCategory(categoryRequest));
-
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.saveCategory(categoryRequest));
     }
 
@@ -54,5 +49,4 @@ public class CategoryController {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }
-
 }
