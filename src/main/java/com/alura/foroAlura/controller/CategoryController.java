@@ -3,9 +3,8 @@ package com.alura.foroAlura.controller;
 import com.alura.foroAlura.dto.category.CategoryRequest;
 import com.alura.foroAlura.dto.category.CategoryResponse;
 import com.alura.foroAlura.mapper.CategoryMapper;
-import com.alura.foroAlura.model.Category;
-import com.alura.foroAlura.repository.CategoryRepository;
 import com.alura.foroAlura.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,13 +33,13 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponse> saveCategory(@RequestBody CategoryRequest categoryRequest) {
+    public ResponseEntity<CategoryResponse> saveCategory(@RequestBody @Valid CategoryRequest categoryRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.saveCategory(categoryRequest));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponse> updateCategory(
-            @PathVariable Long id, @RequestBody CategoryRequest categoryRequest) {
+            @PathVariable Long id, @RequestBody @Valid CategoryRequest categoryRequest) {
         return ResponseEntity.ok(categoryService.updateCategory(id, categoryRequest));
     }
 
