@@ -1,7 +1,9 @@
 package com.alura.foroAlura.dto.common;
 
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
 
-
-public record OnlyId (Long id){
+public record OnlyId (
+        @NotNull(message = "Id is required")
+        Long id
+){
 }

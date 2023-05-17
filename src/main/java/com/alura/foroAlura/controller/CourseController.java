@@ -4,6 +4,8 @@ import com.alura.foroAlura.dto.course.CourseRequest;
 import com.alura.foroAlura.dto.course.CourseResponse;
 import com.alura.foroAlura.mapper.CourseMapper;
 import com.alura.foroAlura.service.CourseService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,12 +33,12 @@ public class CourseController {
     }
 
     @PostMapping()
-    public ResponseEntity<CourseResponse> saveCourse(@RequestBody CourseRequest courseRequest) {
-        return ResponseEntity.ok(courseService.saveCourse(courseRequest));
+    public ResponseEntity<CourseResponse> saveCourse(@RequestBody @Valid CourseRequest courseRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(courseService.saveCourse(courseRequest));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CourseResponse> updateCourse(@PathVariable Long id, @RequestBody CourseRequest courseRequest) {
+    public ResponseEntity<CourseResponse> updateCourse(@PathVariable Long id, @RequestBody @Valid CourseRequest courseRequest) {
         return ResponseEntity.ok(courseService.updateCourse(id, courseRequest));
     }
 
