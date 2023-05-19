@@ -6,9 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "Topic")
-@Table(name = "topics", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"title", "message"})
-})
+@Table(name = "topics")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -27,6 +25,9 @@ public class Topic {
     private LocalDateTime creationDate;
     @Enumerated(EnumType.STRING)
     private TopicStatus status;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
+    private Course course;
 
     public enum TopicStatus {
         UNANSWERED,
