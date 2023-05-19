@@ -79,7 +79,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private List<Category> getCategories(List<OnlyId> onlyIdCategories) {
-//        onlyIdCategories.forEach(onlyId -> categoryService.getCategoryById(onlyId.id()));
         return onlyIdCategories.stream().map(
                 onlyId -> categoryService.getCategoryById(onlyId.id())).toList();
     }
