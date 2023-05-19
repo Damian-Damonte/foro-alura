@@ -3,7 +3,6 @@ package com.alura.foroAlura.mapper;
 import com.alura.foroAlura.dto.common.OnlyId;
 import com.alura.foroAlura.dto.topic.TopicRequest;
 import com.alura.foroAlura.dto.topic.TopicResponse;
-import com.alura.foroAlura.dto.topic.TopicUpdate;
 import com.alura.foroAlura.model.Course;
 import com.alura.foroAlura.model.Topic;
 import org.mapstruct.Mapper;
