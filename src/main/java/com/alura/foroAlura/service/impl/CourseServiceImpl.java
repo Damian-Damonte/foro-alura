@@ -57,16 +57,14 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     public CourseResponse updateCourse(Long id, CourseRequest courseRequest) {
         String courseName = courseRequest.name();
-        getCourseById(id);
+        Course course = getCourseById(id);
         Course courseByName = courseRepository.findByName(courseName).orElse(null);
         if(courseByName != null && !(Objects.equals(courseByName.getId(), id)))
             throw new BadRequestException("There is already a course with the name '" + courseName + "'");
         List<Category> categories = getCategories(courseRequest.categories());
 
-        Course course = courseMapper.courseRequestToCourse(courseRequest);
-        course.setId(id);
+        course.setName(courseName);
         course.setCategories(categories);
-        courseRepository.save(course);
 
         return courseMapper.courseToCourseResponse(course);
     }

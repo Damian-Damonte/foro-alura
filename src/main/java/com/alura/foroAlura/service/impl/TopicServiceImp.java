@@ -45,10 +45,9 @@ public class TopicServiceImp implements TopicService {
     @Transactional
     public TopicResponse saveTopic(TopicRequest topicRequest) {
         Course course = courseService.getCourseById(topicRequest.course().id());
-
-        boolean sameTopic = topicRepository.findByTitleAndMessageAndCourseId(
+        boolean topicAlredyExists = topicRepository.findByTitleAndMessageAndCourseId(
                 topicRequest.title(), topicRequest.message(), topicRequest.course().id()).isPresent();
-        if(sameTopic)
+        if(topicAlredyExists)
             throw new BadRequestException("The topic with that title and message already exists in the course with ID " + topicRequest.course().id());
 
         Topic topic = topicRepository.save(topicMapper.topicRequestToTopic(topicRequest));

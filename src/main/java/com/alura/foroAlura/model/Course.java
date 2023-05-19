@@ -36,4 +36,7 @@ public class Course {
             )
     )
     private List<Category> categories;
+
+    @OneToMany(mappedBy = "course", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Topic> topics;
 }
