@@ -10,7 +10,7 @@ public record AnswerRequest(
         @NotBlank(message = "Message is required")
         @Size(max = 2000, message = "Message cannot be longer than 2000 characters")
         String message,
-        @NotNull(message = "Topic course id required") @Valid
+        @NotNull(message = "Topic id required") @Valid
         OnlyId topic
 ) {
 }

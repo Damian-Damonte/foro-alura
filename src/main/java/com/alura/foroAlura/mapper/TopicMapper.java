@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public interface TopicMapper {
     @Mapping(
             target = "course",
-            expression = "java(onlyIdToTopic(topicRequest.course()))")
+            expression = "java(onlyIdToCourse(topicRequest.course()))")
     @Mapping(target = "creationDate", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "status", expression = "java(com.alura.foroAlura.model.Topic.TopicStatus.UNANSWERED)")
     Topic topicRequestToTopic(TopicRequest topicRequest);
@@ -23,7 +23,7 @@ public interface TopicMapper {
     TopicResponse topicToTopicResponse(Topic topic);
 
 //    Probar ponerlo directo en el valor de expression
-    default Course onlyIdToTopic(OnlyId topicId) {
+    default Course onlyIdToCourse(OnlyId topicId) {
         return Course.builder().id(topicId.id()).build();
     }
     default TopicResponse.CourseDTO courseToCourseDTO(Course course) {
