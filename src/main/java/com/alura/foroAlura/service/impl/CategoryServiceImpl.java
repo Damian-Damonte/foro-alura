@@ -41,8 +41,8 @@ public class CategoryServiceImpl implements CategoryService {
         String categoryName = categoryRequest.name();
         if(categoryRepository.findByName(categoryName).isPresent())
             throw new BadRequestException("There is already a category with the name '" + categoryName + "'");
-        Category categorySave = categoryRepository.save(categoryMapper.categoryRequestToCategory(categoryRequest));
-        return categoryMapper.categoryToCategoryResponse(categorySave);
+        Category category = categoryRepository.save(Category.builder().name(categoryRequest.name()).build());
+        return categoryMapper.categoryToCategoryResponse(category);
     }
 
     @Override
@@ -54,7 +54,6 @@ public class CategoryServiceImpl implements CategoryService {
         if(categoryByName != null && !(Objects.equals(categoryByName.getId(), id)))
             throw new BadRequestException("There is already a category with the name '" + categoryName + "'");
         category.setName(categoryName);
-
         return categoryMapper.categoryToCategoryResponse(category);
     }
 

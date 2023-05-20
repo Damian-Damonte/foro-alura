@@ -47,10 +47,12 @@ public class CourseServiceImpl implements CourseService {
         if(courseRepository.findByName(courseName).isPresent())
             throw new BadRequestException("There is already a course with the name '" + courseName + "'");
         List<Category> categories = getCategories(courseRequest.categories());
-        Course courseSave = courseRepository.save(courseMapper.courseRequestToCourse(courseRequest));
-        courseSave.setCategories(categories);
+        Course course = courseRepository.save(Course.builder()
+                        .name(courseRequest.name())
+                        .categories(categories)
+                        .build());
 
-        return courseMapper.courseToCourseResponse(courseSave);
+        return courseMapper.courseToCourseResponse(course);
     }
 
     @Override

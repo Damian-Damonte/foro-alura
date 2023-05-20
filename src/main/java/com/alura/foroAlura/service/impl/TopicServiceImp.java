@@ -58,6 +58,7 @@ public class TopicServiceImp implements TopicService {
                 .status(Topic.TopicStatus.UNANSWERED)
                 .course(course)
                 .build());
+
         return topicMapper.topicToTopicResponse(topic);
     }
 
@@ -69,7 +70,6 @@ public class TopicServiceImp implements TopicService {
         Topic topicByAtributtes = topicRepository.findByTitleAndMessageAndCourseId(
                 topicUpdate.title(), topicUpdate.message(), topicUpdate.course().id()
         ).orElse(null);
-
         if(topicByAtributtes != null && !(Objects.equals(topicByAtributtes.getId(), id)))
             throw new BadRequestException("The topic with that title and message already exists in the course with ID " + topicUpdate.course().id());
 
