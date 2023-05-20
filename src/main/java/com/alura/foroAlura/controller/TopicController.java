@@ -30,7 +30,7 @@ public class TopicController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TopicResponse> getTopicById(@PathVariable Long id) {
-        return ResponseEntity.ok(topicMapper.topicToTopicResponse(topicService.geTopicById(id)));
+        return ResponseEntity.ok(topicMapper.topicToTopicResponse(topicService.getTopicById(id)));
     }
 
     @PostMapping

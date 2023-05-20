@@ -42,7 +42,7 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     @Transactional
     public AnswerResponse saveAnswer(AnswerRequest answerRequest) {
-        Topic topic = topicService.geTopicById(answerRequest.topic().id());
+        Topic topic = topicService.getTopicById(answerRequest.topic().id());
         Answer answer = Answer.builder()
                 .message(answerRequest.message())
                 .creationDate(LocalDateTime.now())
@@ -56,7 +56,7 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     @Transactional
     public AnswerResponse updateAnswer(Long id, AnswerRequest answerRequest) {
-        Topic topic = topicService.geTopicById(answerRequest.topic().id());
+        Topic topic = topicService.getTopicById(answerRequest.topic().id());
         Answer answer = getAnswerById(id);
         answer.setMessage(answerRequest.message());
         answer.setTopic(topic);

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,7 +32,7 @@ public class TopicServiceImp implements TopicService {
     }
 
     @Override
-    public Topic geTopicById(Long id) {
+    public Topic getTopicById(Long id) {
         return topicRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Topic with id " + id + " not found")
         );
@@ -57,6 +58,7 @@ public class TopicServiceImp implements TopicService {
                 .creationDate(LocalDateTime.now())
                 .status(Topic.TopicStatus.UNANSWERED)
                 .course(course)
+                .answers(new ArrayList<>())
                 .build());
 
         return topicMapper.topicToTopicResponse(topic);
@@ -65,7 +67,7 @@ public class TopicServiceImp implements TopicService {
     @Override
     @Transactional
     public TopicResponse updateTopic(Long id, TopicUpdate topicUpdate) {
-        Topic topic = geTopicById(id);
+        Topic topic = getTopicById(id);
         Course course = courseService.getCourseById(topicUpdate.course().id());
         Topic topicByAtributtes = topicRepository.findByTitleAndMessageAndCourseId(
                 topicUpdate.title(), topicUpdate.message(), topicUpdate.course().id()
@@ -84,7 +86,7 @@ public class TopicServiceImp implements TopicService {
     @Override
     @Transactional
     public void deleteTopic(Long id) {
-        geTopicById(id);
+        getTopicById(id);
         topicRepository.deleteById(id);
     }
 }

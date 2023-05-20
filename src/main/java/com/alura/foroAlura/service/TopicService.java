@@ -8,7 +8,7 @@ import com.alura.foroAlura.model.Topic;
 import java.util.List;
 
 public interface TopicService {
-    Topic geTopicById(Long id);
+    Topic getTopicById(Long id);
     List<TopicResponse> getAllTopics();
     TopicResponse saveTopic(TopicRequest topicRequest);
     TopicResponse updateTopic(Long id, TopicUpdate topicUpdate);

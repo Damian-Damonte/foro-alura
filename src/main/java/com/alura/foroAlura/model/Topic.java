@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Topic")
@@ -30,7 +31,7 @@ public class Topic {
     @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
     private Course course;
     @OneToMany(mappedBy = "topic", orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Answer> answers;
+    private List<Answer> answers = new ArrayList<>();
 
     public enum TopicStatus {
         UNANSWERED,
