@@ -9,5 +9,4 @@ import org.springframework.stereotype.Component;
 @Component
 public interface AnswerMapper {
     AnswerResponse answerToAnswerResponse(Answer answer);
-
 }

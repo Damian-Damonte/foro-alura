@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "Topic")
 @Table(name = "topics")
@@ -28,6 +29,8 @@ public class Topic {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
     private Course course;
+    @OneToMany(mappedBy = "topic", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Answer> answers;
 
     public enum TopicStatus {
         UNANSWERED,

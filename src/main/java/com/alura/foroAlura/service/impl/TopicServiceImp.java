@@ -14,6 +14,7 @@ import com.alura.foroAlura.service.TopicService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,12 +47,17 @@ public class TopicServiceImp implements TopicService {
     public TopicResponse saveTopic(TopicRequest topicRequest) {
         Course course = courseService.getCourseById(topicRequest.course().id());
         boolean topicAlredyExists = topicRepository.findByTitleAndMessageAndCourseId(
-                topicRequest.title(), topicRequest.message(), topicRequest.course().id()).isPresent();
+                topicRequest.title(), topicRequest.message(), course.getId()).isPresent();
         if(topicAlredyExists)
             throw new BadRequestException("The topic with that title and message already exists in the course with ID " + topicRequest.course().id());
 
-        Topic topic = topicRepository.save(topicMapper.topicRequestToTopic(topicRequest));
-        topic.setCourse(course);
+        Topic topic = topicRepository.save(Topic.builder()
+                .title(topicRequest.title())
+                .message(topicRequest.message())
+                .creationDate(LocalDateTime.now())
+                .status(Topic.TopicStatus.UNANSWERED)
+                .course(course)
+                .build());
         return topicMapper.topicToTopicResponse(topic);
     }
 

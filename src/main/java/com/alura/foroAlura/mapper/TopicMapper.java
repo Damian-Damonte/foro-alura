@@ -15,8 +15,8 @@ public interface TopicMapper {
     @Mapping(
             target = "course",
             expression = "java(onlyIdToCourse(topicRequest.course()))")
-    @Mapping(target = "creationDate", expression = "java(java.time.LocalDateTime.now())")
-    @Mapping(target = "status", expression = "java(com.alura.foroAlura.model.Topic.TopicStatus.UNANSWERED)")
+//    @Mapping(target = "creationDate", expression = "java(java.time.LocalDateTime.now())")
+//    @Mapping(target = "status", expression = "java(com.alura.foroAlura.model.Topic.TopicStatus.UNANSWERED)")
     Topic topicRequestToTopic(TopicRequest topicRequest);
 
     @Mapping(target = "course", expression = "java(courseToCourseDTO(topic.getCourse()))")
