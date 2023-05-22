@@ -29,4 +29,9 @@ public class ControllerAdvice {
         e.getBindingResult().getFieldErrors().forEach(error -> response.addError(error.getDefaultMessage()));
         return ResponseEntity.badRequest().body(response);
     }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<Void> forbiddenExceptionHandler(ForbiddenException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 }
