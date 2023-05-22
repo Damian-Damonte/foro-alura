@@ -5,6 +5,7 @@ import com.alura.foroAlura.dto.course.CourseResponse;
 import com.alura.foroAlura.mapper.CourseMapper;
 import com.alura.foroAlura.service.CourseService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/courses")
+@AllArgsConstructor
 public class CourseController {
     private final CourseMapper courseMapper;
     private final CourseService courseService;
-
-    public CourseController(CourseMapper courseMapper, CourseService courseService) {
-        this.courseMapper = courseMapper;
-        this.courseService = courseService;
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<CourseResponse> getCourseById(@PathVariable Long id) {

@@ -2,6 +2,7 @@ package com.alura.foroAlura.security;
 
 import com.alura.foroAlura.exception.ForbiddenException;
 import com.alura.foroAlura.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,12 +16,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@AllArgsConstructor
 public class ApplicationConfig {
     private final UserRepository userRepository;
-
-    public ApplicationConfig(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Bean
     public UserDetailsService userDetailsService(){

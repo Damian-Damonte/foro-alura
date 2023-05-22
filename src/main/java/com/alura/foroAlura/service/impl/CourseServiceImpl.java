@@ -11,6 +11,7 @@ import com.alura.foroAlura.model.Course;
 import com.alura.foroAlura.repository.CourseRepository;
 import com.alura.foroAlura.service.CategoryService;
 import com.alura.foroAlura.service.CourseService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,16 +19,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
     private final CategoryService categoryService;
-
-    public CourseServiceImpl(CourseRepository courseRepository, CourseMapper courseMapper, CategoryService categoryService) {
-        this.courseRepository = courseRepository;
-        this.courseMapper = courseMapper;
-        this.categoryService = categoryService;
-    }
 
     @Override
     public Course getCourseById(Long id) {

@@ -8,6 +8,7 @@ import com.alura.foroAlura.mapper.CategoryMapper;
 import com.alura.foroAlura.model.Category;
 import com.alura.foroAlura.repository.CategoryRepository;
 import com.alura.foroAlura.service.CategoryService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,14 +16,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
-
-    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
-        this.categoryRepository = categoryRepository;
-        this.categoryMapper = categoryMapper;
-    }
 
     @Override
     public Category getCategoryById(Long id) {

@@ -11,6 +11,7 @@ import com.alura.foroAlura.model.Topic;
 import com.alura.foroAlura.repository.TopicRepository;
 import com.alura.foroAlura.service.CourseService;
 import com.alura.foroAlura.service.TopicService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,16 +21,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class TopicServiceImp implements TopicService {
     private final TopicRepository topicRepository;
     private final TopicMapper topicMapper;
     private final CourseService courseService;
-
-    public TopicServiceImp(TopicRepository topicRepository, TopicMapper topicMapper, CourseService courseService) {
-        this.topicRepository = topicRepository;
-        this.topicMapper = topicMapper;
-        this.courseService = courseService;
-    }
 
     @Override
     public Topic getTopicById(Long id) {

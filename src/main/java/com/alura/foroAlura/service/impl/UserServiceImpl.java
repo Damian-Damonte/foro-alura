@@ -8,6 +8,7 @@ import com.alura.foroAlura.model.User;
 import com.alura.foroAlura.repository.UserRepository;
 import com.alura.foroAlura.security.JwtService;
 import com.alura.foroAlura.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,18 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public UserServiceImpl(JwtService jwtService, AuthenticationManager authenticationManager, UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.jwtService = jwtService;
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public AuthResponse register(UserRequest userRequest) {
@@ -45,7 +40,6 @@ public class UserServiceImpl implements UserService {
                         .build()
         );
 
-//        String jwtToken = jwtService.generateToken(getClaims(user), user);
         return new AuthResponse(jwtService.generateToken(getClaims(user), user));
     }
 
@@ -58,8 +52,6 @@ public class UserServiceImpl implements UserService {
                 )
         );
         User user = (User) auth.getPrincipal();
-
-//        String jwtToken = jwtService.generateToken(getClaims(user), user);
 
         return new AuthResponse(jwtService.generateToken(getClaims(user), user));
     }

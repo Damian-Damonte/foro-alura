@@ -6,6 +6,7 @@ import com.alura.foroAlura.dto.topic.TopicUpdate;
 import com.alura.foroAlura.mapper.TopicMapper;
 import com.alura.foroAlura.service.TopicService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/topics")
+@AllArgsConstructor
 public class TopicController {
     private final TopicService topicService;
     private final TopicMapper topicMapper;
-
-    public TopicController(TopicService topicService, TopicMapper topicMapper) {
-        this.topicService = topicService;
-        this.topicMapper = topicMapper;
-    }
 
     @GetMapping
     public ResponseEntity<List<TopicResponse>> getAllTopics() {

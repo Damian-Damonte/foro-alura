@@ -5,6 +5,7 @@ import com.alura.foroAlura.dto.answer.AnswerResponse;
 import com.alura.foroAlura.mapper.AnswerMapper;
 import com.alura.foroAlura.service.AnswerService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/answers")
+@AllArgsConstructor
 public class AnswerController {
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
-
-    public AnswerController(AnswerService answerService, AnswerMapper answerMapper) {
-        this.answerService = answerService;
-        this.answerMapper = answerMapper;
-    }
 
     @GetMapping
     public ResponseEntity<List<AnswerResponse>> getAllAnswers() {

@@ -9,6 +9,7 @@ import com.alura.foroAlura.model.Topic;
 import com.alura.foroAlura.repository.AnswerRepository;
 import com.alura.foroAlura.service.AnswerService;
 import com.alura.foroAlura.service.TopicService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,16 +17,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class AnswerServiceImpl implements AnswerService {
     private final AnswerRepository answerRepository;
     private final AnswerMapper answerMapper;
     private final TopicService topicService;
-
-    public AnswerServiceImpl(AnswerRepository answerRepository, AnswerMapper answerMapper, TopicService topicService) {
-        this.answerRepository = answerRepository;
-        this.answerMapper = answerMapper;
-        this.topicService = topicService;
-    }
 
     @Override
     public Answer getAnswerById(Long id) {

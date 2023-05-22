@@ -5,6 +5,7 @@ import com.alura.foroAlura.dto.category.CategoryResponse;
 import com.alura.foroAlura.mapper.CategoryMapper;
 import com.alura.foroAlura.service.CategoryService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
+@AllArgsConstructor
 public class CategoryController {
     private final CategoryMapper categoryMapper;
     private final CategoryService categoryService;
-
-    public CategoryController(CategoryMapper categoryMapper, CategoryService categoryService) {
-        this.categoryMapper = categoryMapper;
-        this.categoryService = categoryService;
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable Long id) {
