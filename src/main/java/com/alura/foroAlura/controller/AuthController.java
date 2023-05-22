@@ -3,7 +3,7 @@ package com.alura.foroAlura.controller;
 import com.alura.foroAlura.dto.auth.AuthRequest;
 import com.alura.foroAlura.dto.auth.AuthResponse;
 import com.alura.foroAlura.dto.user.UserRequest;
-import com.alura.foroAlura.service.UserService;
+import com.alura.foroAlura.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @AllArgsConstructor
 public class AuthController {
-    private final UserService userService;
+    private final AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody @Valid UserRequest userRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(userRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(userRequest));
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponse> authenticate(@RequestBody @Valid AuthRequest authRequest) {
-        return ResponseEntity.ok(userService.authenticate(authRequest));
+        return ResponseEntity.ok(authService.authenticate(authRequest));
     }
 }

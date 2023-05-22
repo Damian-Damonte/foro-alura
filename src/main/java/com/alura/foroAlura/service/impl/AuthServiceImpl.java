@@ -7,7 +7,7 @@ import com.alura.foroAlura.exception.BadRequestException;
 import com.alura.foroAlura.model.User;
 import com.alura.foroAlura.repository.UserRepository;
 import com.alura.foroAlura.security.JwtService;
-import com.alura.foroAlura.service.UserService;
+import com.alura.foroAlura.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
+public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
