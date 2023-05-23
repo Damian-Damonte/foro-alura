@@ -26,7 +26,7 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     @Column(nullable = false, length = 100)
     private String name;
     @Column(nullable = false, length = 100)
@@ -35,6 +35,8 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Topic> topics;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

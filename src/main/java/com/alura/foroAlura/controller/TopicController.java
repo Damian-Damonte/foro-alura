@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,8 +32,10 @@ public class TopicController {
     }
 
     @PostMapping
-    public ResponseEntity<TopicResponse> saveTopic(@RequestBody @Valid TopicRequest topicRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(topicService.saveTopic(topicRequest));
+    public ResponseEntity<TopicResponse> saveTopic(@RequestBody @Valid TopicRequest topicRequest,
+                                                   Authentication authentication
+            ) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(topicService.saveTopic(authentication, topicRequest));
     }
 
     @PutMapping("/{id}")

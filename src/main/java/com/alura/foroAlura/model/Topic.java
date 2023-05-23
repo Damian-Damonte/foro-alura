@@ -32,6 +32,9 @@ public class Topic {
     private Course course;
     @OneToMany(mappedBy = "topic", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Answer> answers = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
 
     public enum TopicStatus {
         UNANSWERED,

@@ -12,6 +12,7 @@ import com.alura.foroAlura.repository.TopicRepository;
 import com.alura.foroAlura.service.CourseService;
 import com.alura.foroAlura.service.TopicService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,8 @@ public class TopicServiceImp implements TopicService {
     private final TopicRepository topicRepository;
     private final TopicMapper topicMapper;
     private final CourseService courseService;
+    private final AuthenticationFacade authenticationFacade;
+
 
     @Override
     public Topic getTopicById(Long id) {
@@ -41,7 +44,7 @@ public class TopicServiceImp implements TopicService {
 
     @Override
     @Transactional
-    public TopicResponse saveTopic(TopicRequest topicRequest) {
+    public TopicResponse saveTopic(Authentication authentication, TopicRequest topicRequest) {
         Course course = courseService.getCourseById(topicRequest.course().id());
         boolean topicAlredyExists = topicRepository.findByTitleAndMessageAndCourseId(
                 topicRequest.title(), topicRequest.message(), course.getId()).isPresent();
@@ -55,6 +58,7 @@ public class TopicServiceImp implements TopicService {
                 .status(Topic.TopicStatus.UNANSWERED)
                 .course(course)
                 .answers(new ArrayList<>())
+                .user(authenticationFacade.getUser(authentication))
                 .build());
 
         return topicMapper.topicToTopicResponse(topic);

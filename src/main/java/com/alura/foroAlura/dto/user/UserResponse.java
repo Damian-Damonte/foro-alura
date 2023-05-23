@@ -14,9 +14,6 @@ public record UserResponse(
         @NotBlank(message = "User email is required")
         @Size(max = 100, message = "User email cannot be longer than 100 characters")
         String email,
-        @NotBlank(message = "User password is required")
-        @Size(max = 100, message = "User password cannot be longer than 100 characters")
-        String password,
         @NotBlank(message = "User role is required")
         User.Role role
 ) {
