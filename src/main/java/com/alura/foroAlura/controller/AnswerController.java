@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,19 +31,19 @@ public class AnswerController {
     }
 
     @PostMapping
-    public ResponseEntity<AnswerResponse> saveAnswer(@RequestBody @Valid AnswerRequest answerRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(answerService.saveAnswer(answerRequest));
+    public ResponseEntity<AnswerResponse> saveAnswer(@RequestBody @Valid AnswerRequest answerRequest, Authentication authentication) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(answerService.saveAnswer(authentication, answerRequest));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<AnswerResponse> updateAnswer(
-            @PathVariable Long id, @RequestBody @Valid AnswerRequest answerRequest) {
-        return ResponseEntity.ok(answerService.updateAnswer(id, answerRequest));
+            @PathVariable Long id, @RequestBody @Valid AnswerRequest answerRequest, Authentication authentication) {
+        return ResponseEntity.ok(answerService.updateAnswer(authentication, id, answerRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAnswer(@PathVariable Long id) {
-        answerService.deleteAnswer(id);
+    public ResponseEntity<Void> deleteAnswer(@PathVariable Long id, Authentication authentication) {
+        answerService.deleteAnswer(authentication, id);
         return ResponseEntity.noContent().build();
     }
 }

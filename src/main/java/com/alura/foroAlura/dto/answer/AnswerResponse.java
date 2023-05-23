@@ -1,6 +1,7 @@
 package com.alura.foroAlura.dto.answer;
 
 import com.alura.foroAlura.dto.common.OnlyId;
+import com.alura.foroAlura.dto.user.UserResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +20,8 @@ public record AnswerResponse(
         @NotNull(message = "You must indicate whether the answer is the solution")
         boolean solution,
         @NotNull(message = "Topic course id required") @Valid
-        OnlyId topic
+        OnlyId topic,
+        @NotNull(message = "User required")
+        UserResponse user
 ) {
 }

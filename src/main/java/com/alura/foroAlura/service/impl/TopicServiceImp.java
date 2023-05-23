@@ -70,7 +70,7 @@ public class TopicServiceImp implements TopicService {
     @Transactional
     public TopicResponse updateTopic(Authentication authentication, Long id, TopicUpdate topicUpdate) {
         Topic topic = getTopicById(id);
-        isTopicOwnedByUser(authentication, id);
+        isTopicOwnedByUser(authentication, topic.getUser().getId());
         Course course = courseService.getCourseById(topicUpdate.course().id());
         Topic topicByAtributtes = topicRepository.findByTitleAndMessageAndCourseId(
                 topicUpdate.title(), topicUpdate.message(), topicUpdate.course().id()
@@ -89,13 +89,14 @@ public class TopicServiceImp implements TopicService {
     @Override
     @Transactional
     public void deleteTopic(Authentication authentication, Long id) {
-        getTopicById(id);
-        isTopicOwnedByUser(authentication, id);
+        Topic topic = getTopicById(id);
+        isTopicOwnedByUser(authentication, topic.getUser().getId());
         topicRepository.deleteById(id);
     }
 
     private void isTopicOwnedByUser(Authentication authentication, Long id) {
         User user = authenticationFacade.getUser(authentication);
+        System.out.println("User id: " + user.getId() + " ---- id recibido: " + id);
         if(!(Objects.equals(user.getId(), id)))
             throw new ForbiddenException("You are not authorized to modify the topic as it does not belong to you");
     }

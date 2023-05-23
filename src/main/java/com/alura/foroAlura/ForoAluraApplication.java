@@ -72,17 +72,17 @@ public class ForoAluraApplication {
                         new OnlyId(2L)
                     ));
 
-            answerService.saveAnswer(new AnswerRequest(
+            answerService.saveAnswer(authentication, new AnswerRequest(
                     "Answer 1",
                     new OnlyId(1L)
             ));
 
-            answerService.saveAnswer(new AnswerRequest(
+            answerService.saveAnswer(authentication, new AnswerRequest(
                     "Answer 2",
                     new OnlyId(1L)
             ));
 
-            answerService.saveAnswer(new AnswerRequest(
+            answerService.saveAnswer(authentication, new AnswerRequest(
                     "Answer 3",
                     new OnlyId(2L)
             ));
