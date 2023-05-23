@@ -39,13 +39,15 @@ public class TopicController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TopicResponse> updateTopic(@PathVariable Long id, @RequestBody @Valid TopicUpdate topicUpdate) {
-        return ResponseEntity.ok(topicService.updateTopic(id, topicUpdate));
+    public ResponseEntity<TopicResponse> updateTopic(@PathVariable Long id,
+                                                     @RequestBody @Valid TopicUpdate topicUpdate,
+                                                     Authentication authentication) {
+        return ResponseEntity.ok(topicService.updateTopic(authentication, id, topicUpdate));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTopic(@PathVariable Long id) {
-        topicService.deleteTopic(id);
+    public ResponseEntity<Void> deleteTopic(@PathVariable Long id, Authentication authentication) {
+        topicService.deleteTopic(authentication, id);
         return ResponseEntity.noContent().build();
     }
 }

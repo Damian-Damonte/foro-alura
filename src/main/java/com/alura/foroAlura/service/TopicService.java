@@ -12,6 +12,6 @@ public interface TopicService {
     Topic getTopicById(Long id);
     List<TopicResponse> getAllTopics();
     TopicResponse saveTopic(Authentication authentication, TopicRequest topicRequest);
-    TopicResponse updateTopic(Long id, TopicUpdate topicUpdate);
-    void deleteTopic(Long id);
+    TopicResponse updateTopic(Authentication authentication, Long id, TopicUpdate topicUpdate);
+    void deleteTopic(Authentication authentication, Long id);
 }

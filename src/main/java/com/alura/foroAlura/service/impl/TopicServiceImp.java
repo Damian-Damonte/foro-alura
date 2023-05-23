@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.alura.foroAlura.model.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -66,8 +67,9 @@ public class TopicServiceImp implements TopicService {
 
     @Override
     @Transactional
-    public TopicResponse updateTopic(Long id, TopicUpdate topicUpdate) {
+    public TopicResponse updateTopic(Authentication authentication, Long id, TopicUpdate topicUpdate) {
         Topic topic = getTopicById(id);
+        isTopicOwnedByUser(authentication, id);
         Course course = courseService.getCourseById(topicUpdate.course().id());
         Topic topicByAtributtes = topicRepository.findByTitleAndMessageAndCourseId(
                 topicUpdate.title(), topicUpdate.message(), topicUpdate.course().id()
@@ -85,8 +87,15 @@ public class TopicServiceImp implements TopicService {
 
     @Override
     @Transactional
-    public void deleteTopic(Long id) {
+    public void deleteTopic(Authentication authentication, Long id) {
         getTopicById(id);
+        isTopicOwnedByUser(authentication, id);
         topicRepository.deleteById(id);
+    }
+
+    private void isTopicOwnedByUser(Authentication authentication, Long id) {
+        User user = authenticationFacade.getUser(authentication);
+        if(!(Objects.equals(user.getId(), id)))
+            throw new BadRequestException("You are not authorized to modify the topic as it does not belong to you");
     }
 }
