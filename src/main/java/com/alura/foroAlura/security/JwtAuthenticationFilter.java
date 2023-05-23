@@ -1,6 +1,6 @@
 package com.alura.foroAlura.security;
 
-import com.alura.foroAlura.exception.ForbiddenException;
+import com.alura.foroAlura.exception.UnauthorizedException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
@@ -68,7 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (ExpiredJwtException ex) {
             System.out.println("JWT expired");
             filterChain.doFilter(request, response);
-        } catch (ForbiddenException ex) {
+        } catch (UnauthorizedException ex) {
             System.out.println("User not found");
             filterChain.doFilter(request, response);
         }

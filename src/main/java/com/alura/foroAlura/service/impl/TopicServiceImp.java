@@ -4,6 +4,7 @@ import com.alura.foroAlura.dto.topic.TopicRequest;
 import com.alura.foroAlura.dto.topic.TopicResponse;
 import com.alura.foroAlura.dto.topic.TopicUpdate;
 import com.alura.foroAlura.exception.BadRequestException;
+import com.alura.foroAlura.exception.ForbiddenException;
 import com.alura.foroAlura.exception.NotFoundException;
 import com.alura.foroAlura.mapper.TopicMapper;
 import com.alura.foroAlura.model.Course;
@@ -96,6 +97,6 @@ public class TopicServiceImp implements TopicService {
     private void isTopicOwnedByUser(Authentication authentication, Long id) {
         User user = authenticationFacade.getUser(authentication);
         if(!(Objects.equals(user.getId(), id)))
-            throw new BadRequestException("You are not authorized to modify the topic as it does not belong to you");
+            throw new ForbiddenException("You are not authorized to modify the topic as it does not belong to you");
     }
 }

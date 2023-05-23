@@ -1,6 +1,6 @@
 package com.alura.foroAlura.security;
 
-import com.alura.foroAlura.exception.ForbiddenException;
+import com.alura.foroAlura.exception.UnauthorizedException;
 import com.alura.foroAlura.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ public class ApplicationConfig {
     @Bean
     public UserDetailsService userDetailsService(){
         return email -> userRepository.findByEmail(email)
-                .orElseThrow(ForbiddenException::new);
+                .orElseThrow(UnauthorizedException::new);
     }
 
     @Bean

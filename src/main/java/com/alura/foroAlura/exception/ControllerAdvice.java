@@ -1,14 +1,14 @@
 package com.alura.foroAlura.exception;
 
 import com.alura.foroAlura.dto.exception.BadRequest;
+import com.alura.foroAlura.dto.exception.Forbidden;
 import com.alura.foroAlura.dto.exception.NotFound;
+import com.alura.foroAlura.dto.exception.Unauthorized;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.Map;
 
 @RestControllerAdvice
 public class ControllerAdvice {
@@ -30,8 +30,13 @@ public class ControllerAdvice {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<Unauthorized> UnauthorizedExceptionHandler(UnauthorizedException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Unauthorized());
+    }
+
     @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity<Void> forbiddenExceptionHandler(ForbiddenException e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<Forbidden> forbiddenExceptionHandler(ForbiddenException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Forbidden(e.getMessage()));
     }
 }
