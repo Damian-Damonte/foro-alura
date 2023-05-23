@@ -30,7 +30,7 @@ public class Topic {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
     private Course course;
-    @OneToMany(mappedBy = "topic", orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "topic", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Answer> answers = new ArrayList<>();
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)

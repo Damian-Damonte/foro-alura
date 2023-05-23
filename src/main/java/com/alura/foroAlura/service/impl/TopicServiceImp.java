@@ -7,6 +7,7 @@ import com.alura.foroAlura.exception.BadRequestException;
 import com.alura.foroAlura.exception.ForbiddenException;
 import com.alura.foroAlura.exception.NotFoundException;
 import com.alura.foroAlura.mapper.TopicMapper;
+import com.alura.foroAlura.model.Answer;
 import com.alura.foroAlura.model.Course;
 import com.alura.foroAlura.model.Topic;
 import com.alura.foroAlura.repository.TopicRepository;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -92,6 +94,19 @@ public class TopicServiceImp implements TopicService {
         Topic topic = getTopicById(id);
         isTopicOwnedByUser(authentication, topic.getUser().getId());
         topicRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void topicSolution(Authentication authentication, Long topicId, Long answerId) {
+        Topic topic = getTopicById(topicId);
+        isTopicOwnedByUser(authentication, topic.getUser().getId());
+        Optional<Answer> answer = topic.getAnswers().stream().filter(
+                ans -> Objects.equals(ans.getId(), answerId)).findFirst();
+        if(answer.isEmpty())
+            throw new BadRequestException("Answer with id " + answerId + " not found in topic with id " + topicId);
+
+        answer.get().setSolution(!answer.get().isSolution());
     }
 
     private void isTopicOwnedByUser(Authentication authentication, Long id) {

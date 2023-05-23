@@ -31,6 +31,13 @@ public class TopicController {
         return ResponseEntity.ok(topicMapper.topicToTopicResponse(topicService.getTopicById(id)));
     }
 
+    @GetMapping("/{topicId}/solution/{answerId}")
+    public ResponseEntity<Void> topicSoluction(Authentication authentication,
+                                               @PathVariable Long topicId, @PathVariable Long answerId){
+        topicService.topicSolution(authentication, topicId, answerId);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping
     public ResponseEntity<TopicResponse> saveTopic(@RequestBody @Valid TopicRequest topicRequest,
                                                    Authentication authentication
