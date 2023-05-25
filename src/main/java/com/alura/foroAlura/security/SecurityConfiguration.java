@@ -23,15 +23,9 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(requests -> requests
-//                                .requestMatchers(HttpMethod.POST, "/bookings").authenticated()
-//                                .requestMatchers(HttpMethod.POST, "/ratings").authenticated()
-//                                .requestMatchers(HttpMethod.POST, "/usuarios/favoritos").authenticated()
-//                                .requestMatchers(HttpMethod.GET, "/usuarios/{id}").authenticated()
-//                                .requestMatchers("/usuarios/**").hasRole("ADMIN")
                                 .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated()
-//                                .requestMatchers(HttpMethod.GET).permitAll()
-//                                .anyRequest().hasRole("ADMIN")
 //                        .anyRequest().permitAll()
                 )
                 .sessionManagement()

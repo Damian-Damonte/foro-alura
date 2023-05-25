@@ -4,6 +4,7 @@ import com.alura.foroAlura.dto.course.CourseRequest;
 import com.alura.foroAlura.dto.course.CourseResponse;
 import com.alura.foroAlura.mapper.CourseMapper;
 import com.alura.foroAlura.service.CourseService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,9 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            description = "When deleting the course, all its topics and replies will be deleted as well"
+    )
     public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);
         return ResponseEntity.noContent().build();

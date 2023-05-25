@@ -5,6 +5,7 @@ import com.alura.foroAlura.dto.topic.TopicResponse;
 import com.alura.foroAlura.dto.topic.TopicUpdate;
 import com.alura.foroAlura.mapper.TopicMapper;
 import com.alura.foroAlura.service.TopicService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,6 +54,9 @@ public class TopicController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            description = "When deleting the topic, all its replies will be deleted as well"
+    )
     public ResponseEntity<Void> deleteTopic(@PathVariable Long id, Authentication authentication) {
         topicService.deleteTopic(authentication, id);
         return ResponseEntity.noContent().build();
