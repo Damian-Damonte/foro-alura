@@ -60,7 +60,7 @@ public class ReplyServiceImpl implements ReplyService {
     @Transactional
     public ReplyResponse updateReply(Authentication authentication, Long id, ReplyRequest replyRequest) {
         Reply reply = getReplyById(id);
-        isReplyOwnedByUser(authentication, reply.getUser().getId());
+        userAuthorizeToModify(authentication, reply.getUser().getId());
         Topic topic = topicService.getTopicById(replyRequest.topic().id());
         reply.setMessage(replyRequest.message());
         reply.setTopic(topic);
@@ -71,13 +71,14 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public void deleteReply(Authentication authentication, Long id) {
         Reply reply = getReplyById(id);
-        isReplyOwnedByUser(authentication, reply.getUser().getId());
+        userAuthorizeToModify(authentication, reply.getUser().getId());
         replyRepository.deleteById(id);
     }
 
-    private void isReplyOwnedByUser(Authentication authentication, Long id) {
+    private void userAuthorizeToModify(Authentication authentication, Long id) {
         User user = authenticationFacade.getUser(authentication);
-        if(!(Objects.equals(user.getId(), id)))
+        System.out.println(user.getRole().name());
+        if(!Objects.equals(user.getId(), id) && !user.getRole().name().equals("ROLE_ADMIN"))
             throw new ForbiddenException("You are not authorized to modify the topic as it does not belong to you");
     }
 }

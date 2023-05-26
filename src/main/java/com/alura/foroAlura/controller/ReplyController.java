@@ -38,7 +38,7 @@ public class ReplyController {
 
     @PutMapping("/{id}")
     @Operation(
-            summary = "Only the owner of the reply can modify it"
+            summary = "Only the owner of the response or an admin user can modify it"
     )
     public ResponseEntity<ReplyResponse> updateReply(
             @PathVariable Long id, @RequestBody @Valid ReplyRequest replyRequest, Authentication authentication) {
@@ -47,7 +47,7 @@ public class ReplyController {
 
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Only the owner of the reply can delete it"
+            summary = "Only the owner of the response or an admin user can delete it"
     )
     public ResponseEntity<Void> deleteReply(@PathVariable Long id, Authentication authentication) {
         replyService.deleteReply(authentication, id);
