@@ -33,6 +33,9 @@ public class TopicController {
     }
 
     @GetMapping("/{topicId}/solution/{answerId}")
+    @Operation(
+            summary = "Only the owner of the topic can mark a reply as the solution"
+    )
     public ResponseEntity<Void> topicSoluction(Authentication authentication,
                                                @PathVariable Long topicId, @PathVariable Long answerId){
         topicService.topicSolution(authentication, topicId, answerId);
@@ -40,6 +43,9 @@ public class TopicController {
     }
 
     @PostMapping
+    @Operation(
+            summary = "There cannot be another topic with the same title and message in the same course"
+    )
     public ResponseEntity<TopicResponse> saveTopic(@RequestBody @Valid TopicRequest topicRequest,
                                                    Authentication authentication
             ) {
@@ -47,6 +53,9 @@ public class TopicController {
     }
 
     @PutMapping("/{id}")
+    @Operation(
+            summary = "Only the owner of the topic can modify it"
+    )
     public ResponseEntity<TopicResponse> updateTopic(@PathVariable Long id,
                                                      @RequestBody @Valid TopicUpdate topicUpdate,
                                                      Authentication authentication) {

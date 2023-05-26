@@ -4,6 +4,7 @@ import com.alura.foroAlura.dto.answer.AnswerRequest;
 import com.alura.foroAlura.dto.answer.AnswerResponse;
 import com.alura.foroAlura.mapper.AnswerMapper;
 import com.alura.foroAlura.service.AnswerService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,9 @@ public class AnswerController {
     }
 
     @PutMapping("/{id}")
+    @Operation(
+            summary = "Only the owner of the answer can modify it"
+    )
     public ResponseEntity<AnswerResponse> updateAnswer(
             @PathVariable Long id, @RequestBody @Valid AnswerRequest answerRequest, Authentication authentication) {
         return ResponseEntity.ok(answerService.updateAnswer(authentication, id, answerRequest));
