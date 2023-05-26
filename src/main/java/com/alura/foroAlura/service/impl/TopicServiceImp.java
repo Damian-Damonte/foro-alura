@@ -72,7 +72,7 @@ public class TopicServiceImp implements TopicService {
     @Transactional
     public TopicResponse updateTopic(Authentication authentication, Long id, TopicUpdate topicUpdate) {
         Topic topic = getTopicById(id);
-        isTopicOwnedByUser(authentication, topic.getUser().getId());
+        userAuthorizedToModifyOrDelete(authentication, topic.getUser().getId());
         Course course = courseService.getCourseById(topicUpdate.course().id());
         Topic topicByAtributtes = topicRepository.findByTitleAndMessageAndCourseId(
                 topicUpdate.title(), topicUpdate.message(), topicUpdate.course().id()
@@ -92,7 +92,7 @@ public class TopicServiceImp implements TopicService {
     @Transactional
     public void deleteTopic(Authentication authentication, Long id) {
         Topic topic = getTopicById(id);
-        isTopicOwnedByUser(authentication, topic.getUser().getId());
+        userAuthorizedToModifyOrDelete(authentication, topic.getUser().getId());
         topicRepository.deleteById(id);
     }
 
@@ -100,7 +100,7 @@ public class TopicServiceImp implements TopicService {
     @Transactional
     public void topicSolution(Authentication authentication, Long topicId, Long answerId) {
         Topic topic = getTopicById(topicId);
-        isTopicOwnedByUser(authentication, topic.getUser().getId());
+        userAuthorizedToModifyOrDelete(authentication, topic.getUser().getId());
         Optional<Reply> answer = topic.getReplies().stream().filter(
                 ans -> Objects.equals(ans.getId(), answerId)).findFirst();
         if(answer.isEmpty())
@@ -109,10 +109,9 @@ public class TopicServiceImp implements TopicService {
         answer.get().setSolution(!answer.get().isSolution());
     }
 
-    private void isTopicOwnedByUser(Authentication authentication, Long id) {
+    private void userAuthorizedToModifyOrDelete(Authentication authentication, Long id) {
         User user = authenticationFacade.getUser(authentication);
-        System.out.println("User id: " + user.getId() + " ---- id recibido: " + id);
-        if(!(Objects.equals(user.getId(), id)))
+        if(!Objects.equals(user.getId(), id) && !user.getRole().name().equals("ROLE_ADMIN"))
             throw new ForbiddenException("You are not authorized to modify the topic as it does not belong to you");
     }
 }

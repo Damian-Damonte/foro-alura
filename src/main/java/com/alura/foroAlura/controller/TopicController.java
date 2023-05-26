@@ -54,7 +54,7 @@ public class TopicController {
 
     @PutMapping("/{id}")
     @Operation(
-            summary = "Only the owner of the topic can modify it"
+            summary = "Only the owner of the topic or an admin user can modify it"
     )
     public ResponseEntity<TopicResponse> updateTopic(@PathVariable Long id,
                                                      @RequestBody @Valid TopicUpdate topicUpdate,
@@ -64,6 +64,7 @@ public class TopicController {
 
     @DeleteMapping("/{id}")
     @Operation(
+            summary = "Only the owner of the topic or an admin user can delete it",
             description = "When deleting the topic, all its replies will be deleted as well"
     )
     public ResponseEntity<Void> deleteTopic(@PathVariable Long id, Authentication authentication) {
