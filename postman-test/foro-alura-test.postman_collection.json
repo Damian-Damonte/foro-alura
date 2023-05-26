@@ -1,0 +1,2575 @@
+{
+	"info": {
+		"_postman_id": "f72f85d7-2ab4-4fd1-948a-61bb5aed11ae",
+		"name": "foro-alura-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21574452"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"jwt in json\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.have.property(\"jwt\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Damian\",\r\n    \"email\":\"damontedamian@gmail.com\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/auth/register",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register-second-user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"jwt in json\", function () {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.have.property(\"jwt\");\r",
+									"    pm.environment.set(\"jwtSecondUser\", response.jwt);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Juan\",\r\n    \"email\":\"juanfernandez@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/auth/register",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register-email-in-use",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Damian\",\r\n    \"email\":\"damontedamian@gmail.com\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/auth/register",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "authenticate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"pm.test(\"jwt in json\", function () {\r",
+									"    pm.expect(response).to.have.property(\"jwt\");\r",
+									"    pm.environment.set(\"jwtUser\", response.jwt);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"damontedamian@gmail.com\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/auth/authenticate",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"auth",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "authenticate-user-admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"pm.test(\"jwt in json\", function () {\r",
+									"    pm.expect(response).to.have.property(\"jwt\");\r",
+									"    pm.environment.set(\"jwtAdmin\", response.jwt);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/auth/authenticate",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"auth",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postCategory-no-authenticate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Python\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/categories",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "postCategory-without-name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/categories",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postCategory-user-unauthorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtUser}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/categories",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postCategory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"token en respuesta\", function () {\r",
+									"    pm.expect(response.name).to.eql(\"Python\");\r",
+									"    pm.environment.set(\"idCategoryPost\", response.id);\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Python\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/categories",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"get created category\", function () {\r",
+									"    pm.expect(response.name).to.eql(\"Python\");\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/categories/{{idCategoryPost}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories",
+								"{{idCategoryPost}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postCategory-same-name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Python\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/categories",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postCategory-to-modify-and-delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data category\", function () {\r",
+									"    pm.expect(response.name).to.eql(\"CSS3\");\r",
+									"    pm.environment.set(\"idCategoryPostToDelete\", response.id);\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"CSS3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/categories",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putCategory-update-name-taken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Python\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/categories/{{idCategoryPostToDelete}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories",
+								"{{idCategoryPostToDelete}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putCategory-update-name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data category\", function () {\r",
+									"    pm.expect(response.name).to.eql(\"HTML5\");\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"HTML5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/categories/{{idCategoryPostToDelete}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories",
+								"{{idCategoryPostToDelete}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById -category-updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"get updated category\", function () {\r",
+									"    pm.expect(response.name).to.eql(\"HTML5\");\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/categories/{{idCategoryPostToDelete}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories",
+								"{{idCategoryPostToDelete}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCategory Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/categories/{{idCategoryPostToDelete}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories",
+								"{{idCategoryPostToDelete}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById -category-deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/categories/{{idCategoryPostToDelete}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"categories",
+								"{{idCategoryPostToDelete}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{jwtAdmin}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "course",
+			"item": [
+				{
+					"name": "postCourse-withoud-name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categories\":[\r\n        {\"id\":1},\r\n        {\"id\":2}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/courses",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postCourse-withoud-categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Test Course\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/courses",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postCourse-withoud-user-unauthorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtUser}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Test Course\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/courses",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postCourse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created course\", function () {\r",
+									"    pm.expect(response.name).to.eql(\"Course Test\");\r",
+									"    pm.expect(response.categories).to.be.an('array');\r",
+									"    pm.expect(response.categories).to.have.lengthOf(2);\r",
+									"    pm.environment.set(\"idPostCourse\", response.id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Course Test\",\r\n    \"categories\":[\r\n        {\"id\":1},\r\n        {\"id\":2}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/courses",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByIdCourse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created course\", function () {\r",
+									"    pm.expect(response.name).to.eql(\"Course Test\");\r",
+									"    pm.expect(response.categories).to.be.an('array');\r",
+									"    pm.expect(response.categories).to.have.lengthOf(2);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/courses/{{idPostCourse}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses",
+								"{{idPostCourse}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postCourse-same-name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Course Test\",\r\n    \"categories\":[\r\n        {\"id\":1},\r\n        {\"id\":2}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/courses",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postCourse-to-modify-and-delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created course\", function () {\r",
+									"    pm.expect(response.name).to.eql(\"Course to modify\");\r",
+									"    pm.expect(response.categories).to.be.an('array');\r",
+									"    pm.expect(response.categories).to.have.lengthOf(2);\r",
+									"    pm.environment.set(\"idCourseToModify\", response.id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Course to modify\",\r\n    \"categories\":[\r\n        {\"id\":1},\r\n        {\"id\":2}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/courses",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putCourse-name-taken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Course Test\",\r\n    \"categories\":[\r\n        {\"id\":1},\r\n        {\"id\":2}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/courses/{{idCourseToModify}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses",
+								"{{idCourseToModify}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putCourse-update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data updated course\", function () {\r",
+									"    pm.expect(response.name).to.eql(\"Course to delete\");\r",
+									"    pm.expect(response.categories).to.be.an('array');\r",
+									"    pm.expect(response.categories).to.have.lengthOf(1);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Course to delete\",\r\n    \"categories\":[\r\n        {\"id\":3}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/courses/{{idCourseToModify}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses",
+								"{{idCourseToModify}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByIdCourse-updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created course\", function () {\r",
+									"    pm.expect(response.name).to.eql(\"Course to delete\");\r",
+									"    pm.expect(response.categories).to.be.an('array');\r",
+									"    pm.expect(response.categories).to.have.lengthOf(1);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/courses/{{idCourseToModify}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses",
+								"{{idCourseToModify}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCourse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/courses/{{idCourseToModify}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses",
+								"{{idCourseToModify}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByIdCourse-deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/courses/{{idCourseToModify}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"courses",
+								"{{idCourseToModify}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{jwtAdmin}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "topic",
+			"item": [
+				{
+					"name": "getTopicById-not-found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/topics/2342",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"2342"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postTopic-without-title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\":\"Mensaje del topico 1\",\r\n    \"course\": {\r\n        \"id\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/topics",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postTopic-without-message",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"topic 1\",\r\n    \"course\": {\r\n        \"id\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/topics",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postTopic-courseId-not-exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"topic 1\",\r\n    \"message\":\"Mensaje del topico 1\",\r\n    \"course\": {\r\n        \"id\":23452\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/topics",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postTopic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created topic\", function () {\r",
+									"    pm.expect(response.title).to.eql(\"topic 1\");\r",
+									"    pm.expect(response.message).to.eql('topic 1 message');\r",
+									"    pm.expect(response.status).to.eql('UNANSWERED');\r",
+									"    pm.expect(response.course.id).to.eql(1);\r",
+									"    pm.environment.set(\"idPostTopic\", response.id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"topic 1\",\r\n    \"message\":\"topic 1 message\",\r\n    \"course\": {\r\n        \"id\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/topics",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTopicById-posted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created topic\", function () {\r",
+									"    pm.expect(response.title).to.eql(\"topic 1\");\r",
+									"    pm.expect(response.message).to.eql('topic 1 message');\r",
+									"    pm.expect(response.status).to.eql('UNANSWERED');\r",
+									"    pm.expect(response.course.id).to.eql(1);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopic}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopic}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postTopic-topic-alredy-exists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"topic 1\",\r\n    \"message\":\"topic 1 message\",\r\n    \"course\": {\r\n        \"id\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/topics",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postTopic-to-modify-and-delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created topic\", function () {\r",
+									"    pm.expect(response.title).to.eql(\"topic to delete\");\r",
+									"    pm.expect(response.message).to.eql('topic to delete message');\r",
+									"    pm.expect(response.status).to.eql('UNANSWERED');\r",
+									"    pm.expect(response.course.id).to.eql(1);\r",
+									"    pm.environment.set(\"idPostTopicToModifyAndDel\", response.id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"topic to delete\",\r\n    \"message\":\"topic to delete message\",\r\n    \"course\": {\r\n        \"id\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/topics",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putTopic-alredy-exists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"topic 1\",\r\n    \"message\":\"topic 1 message\",\r\n    \"status\": \"SOLVED\",\r\n    \"course\": {\r\n        \"id\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopicToModifyAndDel}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopicToModifyAndDel}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putTopic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created topic\", function () {\r",
+									"    pm.expect(response.title).to.eql(\"topic UPDATED\");\r",
+									"    pm.expect(response.message).to.eql('topic message UPDATED');\r",
+									"    pm.expect(response.status).to.eql('SOLVED');\r",
+									"    pm.expect(response.course.id).to.eql(2);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"topic UPDATED\",\r\n    \"message\":\"topic message UPDATED\",\r\n    \"status\": \"SOLVED\",\r\n    \"course\": {\r\n        \"id\":2\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopicToModifyAndDel}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopicToModifyAndDel}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTopicById-updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created topic\", function () {\r",
+									"    pm.expect(response.title).to.eql(\"topic UPDATED\");\r",
+									"    pm.expect(response.message).to.eql('topic message UPDATED');\r",
+									"    pm.expect(response.status).to.eql('SOLVED');\r",
+									"    pm.expect(response.course.id).to.eql(2);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopicToModifyAndDel}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopicToModifyAndDel}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTopic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopicToModifyAndDel}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopicToModifyAndDel}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTopicById-deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopicToModifyAndDel}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopicToModifyAndDel}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "answer",
+			"item": [
+				{
+					"name": "getAnswerById-not-exists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/replies/11234",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"replies",
+								"11234"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postAnswer-without-message",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"topic\":{\r\n        \"id\":1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/replies",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"replies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postAnswer-without-topic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\":\"This is the answer message\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/replies",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"replies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTopicById-check-no-answers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data get topic\", function () {\r",
+									"    pm.expect(response.title).to.eql(\"topic 1\");\r",
+									"    pm.expect(response.message).to.eql('topic 1 message');\r",
+									"    pm.expect(response.status).to.eql('UNANSWERED');\r",
+									"    pm.expect(response.course.id).to.eql(1);\r",
+									"    pm.expect(response.replies).to.be.an('array')\r",
+									"        .and.to.have.length(0);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopic}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopic}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postAnswer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const idPostTopic = pm.environment.get(\"idPostTopic\")\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created answer\", function () {\r",
+									"    pm.expect(response.message).to.eql(\"Answer 1\");\r",
+									"    pm.expect(response.solution).to.be.false;\r",
+									"    pm.expect(response.topic.id).to.eql(idPostTopic);\r",
+									"    pm.environment.set(\"idPostAnswer\", response.id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\":\"Answer 1\",\r\n    \"topic\":{\r\n        \"id\":{{idPostTopic}}\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/replies",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"replies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAnswerById-posted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const idPostTopic = pm.environment.get(\"idPostTopic\")\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created answer\", function () {\r",
+									"    pm.expect(response.message).to.eql(\"Answer 1\");\r",
+									"    pm.expect(response.solution).to.be.false;\r",
+									"    pm.expect(response.topic.id).to.eql(idPostTopic);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/replies/{{idPostAnswer}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"replies",
+								"{{idPostAnswer}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTopicById-check-add-answer-to-topic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data get topic\", function () {\r",
+									"    pm.expect(response.title).to.eql(\"topic 1\");\r",
+									"    pm.expect(response.message).to.eql('topic 1 message');\r",
+									"    pm.expect(response.status).to.eql('UNANSWERED');\r",
+									"    pm.expect(response.course.id).to.eql(1);\r",
+									"    pm.expect(response.replies).to.be.an('array')\r",
+									"        .and.to.have.length(1);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopic}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopic}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postAnswer-second",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const idPostTopic = pm.environment.get(\"idPostTopic\")\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created answer\", function () {\r",
+									"    pm.expect(response.message).to.eql(\"Answer 2\");\r",
+									"    pm.expect(response.solution).to.be.false;\r",
+									"    pm.expect(response.topic.id).to.eql(idPostTopic);\r",
+									"    pm.environment.set(\"idPostSecondAnswer\", response.id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\":\"Answer 2\",\r\n    \"topic\":{\r\n        \"id\":{{idPostTopic}}\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/replies",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"replies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTopicById-check-add-second-answer-to-topic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data get topic\", function () {\r",
+									"    pm.expect(response.title).to.eql(\"topic 1\");\r",
+									"    pm.expect(response.message).to.eql('topic 1 message');\r",
+									"    pm.expect(response.status).to.eql('UNANSWERED');\r",
+									"    pm.expect(response.course.id).to.eql(1);\r",
+									"    pm.expect(response.replies).to.be.an('array')\r",
+									"        .and.to.have.length(2);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopic}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopic}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postAnswer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created answer\", function () {\r",
+									"    pm.expect(response.message).to.eql(\"Answer 1 UPDATED\");\r",
+									"    pm.expect(response.solution).to.be.false;\r",
+									"    pm.environment.set(\"idPostAnswer\", response.id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\":\"Answer 1 UPDATED\",\r\n    \"topic\":{\r\n        \"id\":{{idPostTopic}}\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiDomain}}/replies/{{idPostAnswer}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"replies",
+								"{{idPostAnswer}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAnswerById-updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created answer\", function () {\r",
+									"    pm.expect(response.message).to.eql(\"Answer 1 UPDATED\");\r",
+									"    pm.expect(response.solution).to.be.false;\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/replies/{{idPostAnswer}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"replies",
+								"{{idPostAnswer}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAnswer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/replies/{{idPostSecondAnswer}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"replies",
+								"{{idPostSecondAnswer}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTopicById-check-delete-answer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data get topic\", function () {\r",
+									"    pm.expect(response.title).to.eql(\"topic 1\");\r",
+									"    pm.expect(response.message).to.eql('topic 1 message');\r",
+									"    pm.expect(response.status).to.eql('UNANSWERED');\r",
+									"    pm.expect(response.course.id).to.eql(1);\r",
+									"    pm.expect(response.replies).to.be.an('array')\r",
+									"        .and.to.have.length(1);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopic}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopic}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAnswerById-deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/replies/{{idPostSecondAnswer}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"replies",
+								"{{idPostSecondAnswer}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTopicSolution-no-owner-topic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtSecondUser}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopic}}/solution/{{idPostAnswer}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopic}}",
+								"solution",
+								"{{idPostAnswer}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTopicSolution-owner-topic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/topics/{{idPostTopic}}/solution/{{idPostAnswer}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"topics",
+								"{{idPostTopic}}",
+								"solution",
+								"{{idPostAnswer}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAnswerById-check-solution-true",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = JSON.parse(responseBody);\r",
+									"pm.test(\"json data created answer\", function () {\r",
+									"    pm.expect(response.message).to.eql(\"Answer 1 UPDATED\");\r",
+									"    pm.expect(response.solution).to.be.true;\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiDomain}}/replies/{{idPostAnswer}}",
+							"host": [
+								"{{apiDomain}}"
+							],
+							"path": [
+								"replies",
+								"{{idPostAnswer}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "getAllUser-user-unauthorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtSecondUser}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUser-user-admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwtUser}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
