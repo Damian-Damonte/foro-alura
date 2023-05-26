@@ -46,6 +46,9 @@ public class AnswerController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Only the owner of the answer can delete it"
+    )
     public ResponseEntity<Void> deleteAnswer(@PathVariable Long id, Authentication authentication) {
         answerService.deleteAnswer(authentication, id);
         return ResponseEntity.noContent().build();

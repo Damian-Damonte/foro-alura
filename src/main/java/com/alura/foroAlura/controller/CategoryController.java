@@ -49,7 +49,8 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "This endpoint can only be accessed by users with the admin role"
+            summary = "This endpoint can only be accessed by users with the admin role",
+            description = "When you delete a category, it will be removed from all courses, but the course itself will not be deleted"
     )
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
