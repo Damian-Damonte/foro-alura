@@ -77,7 +77,6 @@ public class ReplyServiceImpl implements ReplyService {
 
     private void userAuthorizeToModify(Authentication authentication, Long id) {
         User user = authenticationFacade.getUser(authentication);
-        System.out.println(user.getRole().name());
         if(!Objects.equals(user.getId(), id) && !user.getRole().name().equals("ROLE_ADMIN"))
             throw new ForbiddenException("You are not authorized to modify the topic as it does not belong to you");
     }
