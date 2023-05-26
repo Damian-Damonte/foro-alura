@@ -23,9 +23,11 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(requests -> requests
-                                .requestMatchers("/auth/**").permitAll()
-                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                                .anyRequest().authenticated()
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/courses/**", "/categories/**").authenticated()
+                        .requestMatchers("/courses/**", "/categories/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
 //                        .anyRequest().permitAll()
                 )
                 .sessionManagement()

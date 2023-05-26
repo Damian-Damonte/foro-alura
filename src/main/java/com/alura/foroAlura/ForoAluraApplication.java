@@ -46,6 +46,13 @@ public class ForoAluraApplication {
                             .build());
             Authentication authentication = new UsernamePasswordAuthenticationToken(user1,null, user1.getAuthorities());
 
+            User userAdmin = userRepository.save(User.builder()
+                    .name("admin")
+                    .email("admin@gmail.com")
+                    .password(passwordEncoder.encode("admin"))
+                    .role(User.Role.ROLE_ADMIN)
+                    .build());
+
             Category programing = categoryRepository.save(Category.builder().name("Programing").build());
             Category english = categoryRepository.save(Category.builder().name("English").build());
             Category java = categoryRepository.save(Category.builder().name("Java").build());
