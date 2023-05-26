@@ -2,6 +2,9 @@ package com.alura.foroAlura.security;
 
 import com.alura.foroAlura.exception.UnauthorizedException;
 import com.alura.foroAlura.repository.UserRepository;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,5 +58,25 @@ public class ApplicationConfig {
                         .allowedMethods("*");
             }
         };
+    }
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Foro Alura API")
+                        .description(
+                                """
+                                    Este proyecto corresponde a uno de los challenges de la formación Oracle Next Education de la especialización backend.
+                                    Respositorio del proyecto: https://github.com/Damian-Damonte/foro-alura
+                                """
+                        )
+                        .version("1.0.0")
+                        .contact(new Contact()
+                                .name("Damian Damonte")
+                                .email("damontedamian@gmail.com")
+                                .url("https://www.linkedin.com/in/damian-damonte")
+                        )
+                );
     }
 }

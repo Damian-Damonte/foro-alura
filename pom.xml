@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.alura</groupId>
 	<artifactId>foroAlura</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>foroAlura</name>
 	<description>Foro Alura sprint 1 y 2</description>
 	<properties>
