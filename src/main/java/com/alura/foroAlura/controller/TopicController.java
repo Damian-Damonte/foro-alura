@@ -32,7 +32,7 @@ public class TopicController {
         return ResponseEntity.ok(topicMapper.topicToTopicResponse(topicService.getTopicById(id)));
     }
 
-    @GetMapping("/{topicId}/solution/{answerId}")
+    @PostMapping("/{topicId}/solution/{answerId}")
     @Operation(
             summary = "Only the owner of the topic can mark a reply as the solution"
     )
