@@ -57,7 +57,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public void deleteCategory(Long id) {
-        getCategoryById(id);
+        Category category = getCategoryById(id);
+        category.getCourses().forEach(course -> course.getCategories().remove(category));
         categoryRepository.deleteById(id);
     }
 }
