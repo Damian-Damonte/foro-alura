@@ -31,7 +31,7 @@ public class Topic {
     @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
     private Course course;
     @OneToMany(mappedBy = "topic", orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Answer> answers = new ArrayList<>();
+    private List<Reply> replies = new ArrayList<>();
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;

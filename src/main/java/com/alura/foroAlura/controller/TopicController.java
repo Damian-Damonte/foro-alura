@@ -32,13 +32,13 @@ public class TopicController {
         return ResponseEntity.ok(topicMapper.topicToTopicResponse(topicService.getTopicById(id)));
     }
 
-    @PostMapping("/{topicId}/solution/{answerId}")
+    @PostMapping("/{topicId}/solution/{replyId}")
     @Operation(
             summary = "Only the owner of the topic can mark a reply as the solution"
     )
     public ResponseEntity<Void> topicSoluction(Authentication authentication,
-                                               @PathVariable Long topicId, @PathVariable Long answerId){
-        topicService.topicSolution(authentication, topicId, answerId);
+                                               @PathVariable Long topicId, @PathVariable Long replyId){
+        topicService.topicSolution(authentication, topicId, replyId);
         return ResponseEntity.noContent().build();
     }
 

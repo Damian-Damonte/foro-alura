@@ -7,7 +7,7 @@ import com.alura.foroAlura.exception.BadRequestException;
 import com.alura.foroAlura.exception.ForbiddenException;
 import com.alura.foroAlura.exception.NotFoundException;
 import com.alura.foroAlura.mapper.TopicMapper;
-import com.alura.foroAlura.model.Answer;
+import com.alura.foroAlura.model.Reply;
 import com.alura.foroAlura.model.Course;
 import com.alura.foroAlura.model.Topic;
 import com.alura.foroAlura.repository.TopicRepository;
@@ -61,7 +61,7 @@ public class TopicServiceImp implements TopicService {
                 .creationDate(LocalDateTime.now())
                 .status(Topic.TopicStatus.UNANSWERED)
                 .course(course)
-                .answers(new ArrayList<>())
+                .replies(new ArrayList<>())
                 .user(authenticationFacade.getUser(authentication))
                 .build());
 
@@ -101,10 +101,10 @@ public class TopicServiceImp implements TopicService {
     public void topicSolution(Authentication authentication, Long topicId, Long answerId) {
         Topic topic = getTopicById(topicId);
         isTopicOwnedByUser(authentication, topic.getUser().getId());
-        Optional<Answer> answer = topic.getAnswers().stream().filter(
+        Optional<Reply> answer = topic.getReplies().stream().filter(
                 ans -> Objects.equals(ans.getId(), answerId)).findFirst();
         if(answer.isEmpty())
-            throw new BadRequestException("Answer with id " + answerId + " not found in topic with id " + topicId);
+            throw new BadRequestException("Reply with id " + answerId + " not found in topic with id " + topicId);
 
         answer.get().setSolution(!answer.get().isSolution());
     }

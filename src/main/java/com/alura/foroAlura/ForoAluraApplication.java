@@ -1,6 +1,6 @@
 package com.alura.foroAlura;
 
-import com.alura.foroAlura.dto.answer.AnswerRequest;
+import com.alura.foroAlura.dto.reply.ReplyRequest;
 import com.alura.foroAlura.dto.common.OnlyId;
 import com.alura.foroAlura.dto.topic.TopicRequest;
 import com.alura.foroAlura.model.Category;
@@ -9,7 +9,7 @@ import com.alura.foroAlura.model.User;
 import com.alura.foroAlura.repository.CategoryRepository;
 import com.alura.foroAlura.repository.CourseRepository;
 import com.alura.foroAlura.repository.UserRepository;
-import com.alura.foroAlura.service.AnswerService;
+import com.alura.foroAlura.service.ReplyService;
 import com.alura.foroAlura.service.TopicService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -33,7 +33,7 @@ public class ForoAluraApplication {
             CategoryRepository categoryRepository,
             CourseRepository courseRepository,
             TopicService topicService,
-            AnswerService answerService,
+            ReplyService replyService,
             UserRepository userRepository,
             PasswordEncoder passwordEncoder
     ) {
@@ -79,18 +79,18 @@ public class ForoAluraApplication {
                         new OnlyId(2L)
                     ));
 
-            answerService.saveAnswer(authentication, new AnswerRequest(
-                    "Answer 1",
+            replyService.saveReply(authentication, new ReplyRequest(
+                    "Reply 1",
                     new OnlyId(1L)
             ));
 
-            answerService.saveAnswer(authentication, new AnswerRequest(
-                    "Answer 2",
+            replyService.saveReply(authentication, new ReplyRequest(
+                    "Reply 2",
                     new OnlyId(1L)
             ));
 
-            answerService.saveAnswer(authentication, new AnswerRequest(
-                    "Answer 3",
+            replyService.saveReply(authentication, new ReplyRequest(
+                    "Reply 3",
                     new OnlyId(2L)
             ));
         };

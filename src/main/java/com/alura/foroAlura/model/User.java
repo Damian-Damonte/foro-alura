@@ -38,7 +38,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Topic> topics;
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Topic> answers;
+    private List<Topic> replies;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

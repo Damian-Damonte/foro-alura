@@ -1,8 +1,6 @@
 package com.alura.foroAlura.dto.topic;
 
-import com.alura.foroAlura.dto.course.CourseResponse;
 import com.alura.foroAlura.dto.user.UserResponse;
-import com.alura.foroAlura.model.Answer;
 import com.alura.foroAlura.model.Topic;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,7 +24,7 @@ public record TopicResponse(
         Topic.TopicStatus status,
         @NotNull(message = "Topic course is required")
         CourseDTO course,
-        List<AnswerDTO> answers,
+        List<ReplyDTO> replies,
         @NotNull(message = "Topic user ID is required")
         UserResponse user
 ) {
@@ -35,7 +33,7 @@ public record TopicResponse(
                 String name
         ){}
 
-        public record AnswerDTO(
+        public record ReplyDTO(
                 Long id,
                 String message,
                 LocalDateTime creationDate,

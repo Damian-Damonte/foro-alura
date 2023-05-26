@@ -5,14 +5,14 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Entity(name = "Answer")
-@Table(name = "answers")
+@Entity(name = "Reply")
+@Table(name = "replies")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Answer {
+public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
